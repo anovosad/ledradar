@@ -53,7 +53,13 @@ func downloadRadar(dateTxt string) []byte {
 	url := fmt.Sprintf("https://www.chmi.cz/files/portal/docs/meteo/rad/inca-cz/data/czrad-z_max3d/pacz2gmaps3.z_max3d.%s.0.png", dateTxt)
 	log.Printf("Downloading file: %s", url)
 	resp, err := http.Get(url)
-	if err != nil || resp.StatusCode != 200 {
+
+	if err != nil {
+	        log.Printf("HTTP %s: Cannot download file", err)
+		return nil
+	}
+
+	if  resp.StatusCode != 200 {
 		log.Printf("HTTP %d: Cannot download file", resp.StatusCode)
 		return nil
 	}
